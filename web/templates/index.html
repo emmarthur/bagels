@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bagels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=IBM+Plex+Mono:wght@500&family=Outfit:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <main class="page">
+      <header class="hero">
+        <p class="kicker">Deductive puzzle</p>
+        <h1>Bagels</h1>
+        <p class="tagline">
+          Guess a {{ num_digits }}-digit number with no repeated digits.
+          You get {{ max_guesses }} tries. Clues never say which position matched.
+        </p>
+        <button type="button" class="help-jump-btn" data-help-jump>Help</button>
+      </header>
+
+      <section class="card" aria-labelledby="play-heading">
+        <div class="status-row">
+          <h2 id="play-heading">Your guess</h2>
+          <p id="guesses-left" class="guesses-left">Starting…</p>
+        </div>
+        <form id="guess-form">
+          <label class="field-label" for="guess">{{ num_digits }} digits</label>
+          <input
+            id="guess"
+            name="guess"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="{{ num_digits }}"
+            placeholder="000"
+            required
+          />
+          <div class="actions">
+            <button type="submit" class="btn btn-primary" id="btn-guess">Check guess</button>
+            <button type="button" class="btn btn-ghost" id="btn-new">New number</button>
+          </div>
+        </form>
+        <p id="error-text" class="error" role="alert" hidden></p>
+        <p id="result-banner" class="banner" hidden></p>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Clues</h2>
+        <ul class="legend">
+          <li><strong>Fermi</strong> One digit is correct and in the right place.</li>
+          <li><strong>Pico</strong> One digit is correct but in the wrong place.</li>
+          <li><strong>Bagels</strong> No digit is correct.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Guesses</h2>
+        <ol id="history" class="history"></ol>
+        <p id="history-empty" class="empty">No guesses yet.</p>
+      </section>
+
+      <section class="card help" aria-labelledby="help-heading">
+        <h2 id="help-heading">Help</h2>
+        <h3>About this puzzle</h3>
+        <p>
+          A secret {{ num_digits }}-digit number is chosen with no repeated digits.
+          It can start with zero. Each guess must be exactly {{ num_digits }} digits.
+          You may repeat a digit in a guess, but the secret never does.
+        </p>
+        <h3>How to read a clue</h3>
+        <p>
+          You get one word per digit that appears in the secret. The words are sorted
+          alphabetically, so their order does not tell you which slot was right.
+          If the secret were 248 and you guessed 843, the clue would be
+          <strong>Fermi Pico</strong>: the 4 is in the right place, and the 8 is in the number but not in that place.
+        </p>
+        <h3>How to use it</h3>
+        <ol>
+          <li>Type a {{ num_digits }}-digit guess and press <strong>Check guess</strong>.</li>
+          <li>Use the clue list to narrow the next guess. You have {{ max_guesses }} tries.</li>
+          <li>After a win or a loss, <strong>New number</strong> starts another round. The answer is shown only when the round ends.</li>
+        </ol>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
